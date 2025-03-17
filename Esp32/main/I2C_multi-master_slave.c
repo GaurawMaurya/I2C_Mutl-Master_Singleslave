@@ -9,6 +9,7 @@
 #include "driver/i2c.h"
 #include "string.h"
 #include "driver/gpio.h"
+#include "i2c_lcd.h"
 
 /* Private function prototypes -----------------------------------------------*/
 static void uart_init();
@@ -104,6 +105,11 @@ void uart_event_task(void *arg) {
     }
 }
 
+void Lcd_Display()
+{
+
+}
+
 void uart_send_message(const char *message){
     uart_write_bytes(UART_NUM_1, message, strlen(message));
 }
@@ -115,7 +121,7 @@ void i2c_lcd_task(void *args)
         xSemaphoreTake(lcd_mutex, portMAX_DELAY);
         ESP_LOGI(TAG, "Mutex for Lcd given");
         ESP_LOGI(I2C_TAG, "Using LCD...");
-
+        Lcd_Display();
         // ✅ Use uart_send_message(), NOT uart_event_task()
         uart_send_message("LCD_FREE");
         ESP_LOGI(I2C_TAG, "LCD Free, notifying other master...");
